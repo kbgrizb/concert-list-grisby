@@ -39,6 +39,7 @@ class _ToDoListState extends State<ToDoList> {
   void _handleDeleteItem(Item item) {
     setState(() {
       print("Deleting item");
+      //_itemSet.remove(item);
       items.remove(item);
     });
   }
@@ -46,9 +47,11 @@ class _ToDoListState extends State<ToDoList> {
   void _handleNewItem(String itemText, TextEditingController textController) {
     setState(() {
       print("Adding new item");
-      Item item = const Item(name: "itemText");
+      Item item = Item(name: textController.text);
+      //_itemSet.add(item);
       items.insert(0, item);
       textController.clear();
+      
     });
   }
 
