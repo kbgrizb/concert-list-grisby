@@ -65,11 +65,11 @@ class _ToDoListState extends State<ToDoList> {
           title: const Text('Contacts'),
         ),
         body: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
           children: items.map((item) {
-            return ContactListItem(
+            return ContactListItems(
               item: item,
-              completed: _itemSet.contains(item),
+              favorited: _itemSet.contains(item),
               onListChanged: _handleListChanged,
               onDeleteItem: _handleDeleteItem,
             );
