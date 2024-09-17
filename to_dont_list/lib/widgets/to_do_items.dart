@@ -35,30 +35,22 @@ class _ContactListItemsState extends State<ContactListItems> {
     // taking place and therefore which theme to use.
 
     return widget.favorited //
-        ? Colors.black54
+        ? Colors.deepPurple
         : Theme.of(context).primaryColor;
     
   }
 
   TextStyle? _getTextStyle(BuildContext context) {
-    if (!widget.favorited) return null;
-
-    return const TextStyle(
-      color: Colors.black54,
-      decoration: TextDecoration.lineThrough,
-    );
+     return null;
   }
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        widget.onListChanged(widget.item, widget.favorited);
-      },
-      onLongPress: widget.favorited
-          ? () {
+      onTap: () {},
+      onLongPress:
+           () {
               widget.onDeleteItem(widget.item);
-            }
-          : null,
+            },        
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
         child: Text(widget.item.intials()),
@@ -71,6 +63,8 @@ class _ContactListItemsState extends State<ContactListItems> {
         widget.item.name(),
         style: _getTextStyle(context),
       ),
+      subtitle: Text(
+        widget.item.get_number(),)
     );
   }
 }
