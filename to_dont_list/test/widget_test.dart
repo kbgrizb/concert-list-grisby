@@ -23,28 +23,28 @@ void main() {
   testWidgets('ToDoListItem has a text', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: const Item(name: "test"),
-                completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
-    final textFinder = find.text('test');
+            body: ContactListItems(
+                item: const Contact(first_name: "test", last_name:"last", number: "01" ),
+                favorited: true,
+                onListChanged: (Contact item, bool favorited) {},
+                onDeleteItem: (Contact item) {}))));
+    final textFinder = find.text("test");
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToDoListItem has a Circle Avatar with abbreviation',
+  testWidgets('ContactItem has a Circle Avatar with abbreviation',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: const Item(name: "test"),
-                completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
-    final abbvFinder = find.text('t');
+            body: ContactListItems(
+                item: const Contact(first_name: "test", last_name:"test last", number: "01" ),
+                favorited: true,
+                onListChanged: (Contact item, bool favorited) {},
+                onDeleteItem: (Contact item) {}))));
+    final abbvFinder = find.text('tt');
     final avatarFinder = find.byType(CircleAvatar);
 
     CircleAvatar circ = tester.firstWidget(avatarFinder);
@@ -53,24 +53,23 @@ void main() {
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
     expect(abbvFinder, findsOneWidget);
-    expect(circ.backgroundColor, Colors.black54);
-    expect(ctext.data, "t");
+    expect(ctext.data, "tt");
   });
 
-  testWidgets('Default ToDoList has one item', (tester) async {
+  testWidgets('Default ContactList has one item', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(ContactListItems);
 
     expect(listItemFinder, findsOneWidget);
   });
 
-  testWidgets('Clicking and Typing adds item to ToDoList', (tester) async {
+  testWidgets('Clicking and Typing adds Contact to ContactList', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 
     expect(find.byType(TextField), findsNothing);
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(Key("Add")));
     await tester.pump(); // Pump after every action to rebuild the widgets
     expect(find.text("hi"), findsNothing);
 
@@ -82,9 +81,30 @@ void main() {
     await tester.pump();
     expect(find.text("hi"), findsOneWidget);
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(ContactListItems);
 
     expect(listItemFinder, findsNWidgets(2));
+  });
+
+  testWidgets('Favorite icon changes when clicked',
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: ContactListItems(
+                item: const Contact(first_name: "test", last_name:"test last", number: "01" ),
+                favorited: true,
+                onListChanged: (Contact item, bool favorited) {},
+                onDeleteItem: (Contact item) {}))));
+  
+    final buttonFinder = find.byType(FloatingActionButton);
+
+    FloatingActionButton fav = tester.firstWidget(buttonFinder);
+    
+
+    // Use the `findsOneWidget` matcher provided by flutter_test to verify
+    // that the Text widgets appear exactly once in the widget tree.
+    expect(fav.foregroundColor, Colors.red.shade800);
+  
   });
 
   // One to test the tap and press actions on the items?

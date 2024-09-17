@@ -77,6 +77,7 @@ class _ToDoListState extends State<ToDoList> {
         ),
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
+            key: Key('Add'), 
             onPressed: () {
               showDialog(
                   context: context,
