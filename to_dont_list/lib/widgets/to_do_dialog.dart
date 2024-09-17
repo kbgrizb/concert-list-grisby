@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 typedef ToDoListAddedCallback = Function(
-    String value, TextEditingController textConroller);
+    TextEditingController textConroller, TextEditingController txtcontroller, TextEditingController txtcontrol);
 
 class ToDoDialog extends StatefulWidget {
   const ToDoDialog({
@@ -17,7 +17,9 @@ class ToDoDialog extends StatefulWidget {
 
 class _ToDoDialogState extends State<ToDoDialog> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
-  final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _firstController = TextEditingController();
+  final TextEditingController _lastController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
@@ -28,16 +30,39 @@ class _ToDoDialogState extends State<ToDoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Item To Add'),
-      content: TextField(
+      title: const Text('Contact To Add'),
+      content: Column(children: [
+       TextField(
         onChanged: (value) {
           setState(() {
             valueText = value;
           });
         },
-        controller: _inputController,
-        decoration: const InputDecoration(hintText: "type something here"),
+        controller: _firstController,
+        decoration: const InputDecoration(hintText: "First name"),
       ),
+      TextField(
+        onChanged: (value) {
+          setState(() {
+            valueText = value;
+          });
+        },
+        controller: _lastController,
+        decoration: const InputDecoration(hintText: "Last name"),
+      ),
+      TextField(
+        onChanged: (value) {
+          setState(() {
+            valueText = value;
+          });
+        },
+        controller: _numberController,
+        decoration: const InputDecoration(hintText: "Phone #"),
+        )
+      ],
+      ),
+    
+      
       actions: <Widget>[
         ElevatedButton(
           key: const Key("CancelButton"),
@@ -53,7 +78,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
 
         // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
         ValueListenableBuilder<TextEditingValue>(
-          valueListenable: _inputController,
+          valueListenable: _firstController,
           builder: (context, value, child) {
             return ElevatedButton(
               key: const Key("OKButton"),
@@ -62,7 +87,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
                   ? () {
                     
                       setState(() {
-                        widget.onListAdded(valueText, _inputController);
+                        widget.onListAdded(_firstController, _lastController, _numberController);
                         Navigator.pop(context);
                       });
                     }

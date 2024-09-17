@@ -1,5 +1,6 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
+import 'package:to_dont_list/objects/contact.dart';
 import 'package:to_dont_list/objects/item.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 import 'package:to_dont_list/widgets/to_do_dialog.dart';
@@ -12,10 +13,10 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [const Item(name: "add more todos")];
-  final _itemSet = <Item>{};
+  final List<Contact> items = [const Contact(first_name: "Emergency", last_name: "Services", number: "911")];
+  final _itemSet = <Contact>{};
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleListChanged(Contact item, bool completed) {
     setState(() {
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
@@ -36,7 +37,7 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleDeleteItem(Item item) {
+  void _handleDeleteItem(Contact item) {
     setState(() {
       print("Deleting item");
       //_itemSet.remove(item);
@@ -44,13 +45,15 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleNewItem(String itemText, TextEditingController textController) {
+  void _handleNewItem(TextEditingController textController, TextEditingController txtcontroller, TextEditingController txtcontrol) {
     setState(() {
       print("Adding new item");
-      Item item = Item(name: textController.text);
+      Contact item = Contact(first_name: textController.text, last_name: txtcontroller.text, number: txtcontrol.text);
       //_itemSet.add(item);
       items.insert(0, item);
       textController.clear();
+      txtcontroller.clear();
+      txtcontrol.clear();
       
     });
   }
@@ -59,12 +62,12 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Contacts'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           children: items.map((item) {
-            return ToDoListItem(
+            return ContactListItem(
               item: item,
               completed: _itemSet.contains(item),
               onListChanged: _handleListChanged,
@@ -86,7 +89,7 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
+    title: 'Contacts',
     home: ToDoList(),
   ));
 }

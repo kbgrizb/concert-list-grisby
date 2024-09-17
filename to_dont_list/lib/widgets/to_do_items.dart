@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:to_dont_list/objects/contact.dart';
 import 'package:to_dont_list/objects/item.dart';
 
-typedef ToDoListChangedCallback = Function(Item item, bool completed);
-typedef ToDoListRemovedCallback = Function(Item item);
+typedef ToDoListChangedCallback = Function(Contact item, bool completed);
+typedef ToDoListRemovedCallback = Function(Contact item);
 
-class ToDoListItem extends StatelessWidget {
-  ToDoListItem(
+class ContactListItem extends StatelessWidget {
+  ContactListItem(
       {required this.item,
       required this.completed,
       required this.onListChanged,
       required this.onDeleteItem})
       : super(key: ObjectKey(item));
 
-  final Item item;
+  final Contact item;
   final bool completed;
 
   final ToDoListChangedCallback onListChanged;
@@ -51,10 +52,10 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
-        child: Text(item.abbrev()),
+        child: Text(item.intials()),
       ),
       title: Text(
-        item.name,
+        item.name(),
         style: _getTextStyle(context),
       ),
     );

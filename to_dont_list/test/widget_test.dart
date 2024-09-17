@@ -9,13 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:to_dont_list/main.dart';
+import 'package:to_dont_list/objects/contact.dart';
 import 'package:to_dont_list/objects/item.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 
 void main() {
-  test('Item abbreviation should be first letter', () {
-    const item = Item(name: "add more todos");
-    expect(item.abbrev(), "a");
+  test('Contact abbreviation should be initials', () {
+    const item = Contact(first_name: "Emergency", last_name: "Services", number: "911");
+    expect(item.intials(), "ES");
   });
 
   // Yes, you really need the MaterialApp and Scaffold
