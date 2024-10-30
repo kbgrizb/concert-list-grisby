@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/contact.dart';
 import 'package:to_dont_list/objects/item.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef ToDoListChangedCallback = Function(Contact item, bool favorited);
 typedef ToDoListRemovedCallback = Function(Contact item);
@@ -62,8 +63,18 @@ class _ContactListItemsState extends State<ContactListItems> {
         foregroundColor: widget.favorited ? Colors.red.shade800 : Colors.grey.shade400,
         onPressed: ()=> setState(() => widget.favorited = !widget.favorited),
         child: Icon(Icons.favorite)),
-      const FloatingActionButton(onPressed: (null),
-      child: Icon(Icons.call)),
+      FloatingActionButton(
+        onPressed: () async{
+          final Uri url = Uri(
+            scheme: 'tel', path: widget.item.get_number(),
+          );
+          if (await canLaunchUrl(url)){
+            launchUrl(url);
+          }else{
+            print('cannot launch this url');
+          }
+        },
+        child: Icon(Icons.call)),
       ]),
       title: Text(
         widget.item.name(),
