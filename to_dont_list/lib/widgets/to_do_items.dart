@@ -55,10 +55,16 @@ class _ContactListItemsState extends State<ContactListItems> {
         backgroundColor: _getColor(context),
         child: Text(widget.item.intials()),
       ),
-      trailing: FloatingActionButton(
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+      FloatingActionButton(
         foregroundColor: widget.favorited ? Colors.red.shade800 : Colors.grey.shade400,
         onPressed: ()=> setState(() => widget.favorited = !widget.favorited),
-        child: const Icon(Icons.favorite)),
+        child: Icon(Icons.favorite)),
+      const FloatingActionButton(onPressed: (null),
+      child: Icon(Icons.call)),
+      ]),
       title: Text(
         widget.item.name(),
         style: _getTextStyle(context),
