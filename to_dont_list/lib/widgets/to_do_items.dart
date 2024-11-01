@@ -84,7 +84,11 @@ class _ToDoListItemState extends State<ToDoListItem> {
       subtitle: Text(
   '${widget.item.name2} at ${widget.item.name3}',
         style: widget._getTextStyle(context),
-      )
+      ),
+      trailing: Text(
+  '${widget.item.name3} at ${widget.item.name4}',
+        style: widget._getTextStyle(context),
+      ),
     );
   }
 }
@@ -135,4 +139,6 @@ class StarClipper extends CustomClipper<Path> {
     StarClipper oldie = oldClipper as StarClipper;
     return numberOfPoints != oldie.numberOfPoints;
   }
+
 }
+

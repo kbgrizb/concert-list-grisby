@@ -17,7 +17,5 @@ class Rating {
 
   final int stars;
 
-  
-
-  
 }
+

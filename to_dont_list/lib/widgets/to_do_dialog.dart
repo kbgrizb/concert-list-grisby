@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 typedef ToDoListAddedCallback = Function(
-    String value, String date, String time, TextEditingController textController, TextEditingController textController2);
+
+    String value,
+    String date,
+    String time,
+    String venue,
+    TextEditingController textController,
+    TextEditingController textController2,
+    TextEditingController textController3);
+
 
 class ToDoDialog extends StatefulWidget {
   const ToDoDialog({
@@ -19,6 +27,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _inputController2 = TextEditingController();
+  final TextEditingController _inputController3 = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
     textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
@@ -27,13 +36,16 @@ class _ToDoDialogState extends State<ToDoDialog> {
   String artistName = "";
   String selectedDate = "Select Date";
   String selectedTime = "Select Time";
+  String selectedVenue = "";
+
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Add Concert'),
       content: Column(
-        mainAxisSize: MainAxisSize.min, 
+        mainAxisSize: MainAxisSize.min,
+
         children: [
           TextField(
             key: const Key("ConcertField"),
@@ -45,6 +57,17 @@ class _ToDoDialogState extends State<ToDoDialog> {
             controller: _inputController,
             decoration: const InputDecoration(hintText: "Artist Name"),
           ),
+          TextField(
+            key: const Key("VenueField"),
+            onChanged: (venue) {
+              setState(() {
+                selectedVenue = venue;
+              });
+            },
+            controller: _inputController3,
+            decoration: const InputDecoration(hintText: "Concert Venue"),
+          ),
+
           const SizedBox(height: 20),
           Row(
             children: [
@@ -107,15 +130,19 @@ class _ToDoDialogState extends State<ToDoDialog> {
             return ElevatedButton(
               key: const Key("OKButton"),
               style: yesStyle,
-              onPressed: value.text.isNotEmpty && selectedDate != "Select Date" && selectedTime != "Select Time"
+              onPressed: value.text.isNotEmpty &&
+                      selectedDate != "Select Date" &&
+                      selectedTime != "Select Time"
                   ? () {
                       widget.onListAdded(
-                        artistName,
-                        selectedDate,
-                        selectedTime,
-                        _inputController,
-                        _inputController2,
-                      );
+                          artistName,
+                          selectedDate,
+                          selectedTime,
+                          selectedVenue,
+                          _inputController,
+                          _inputController2,
+                          _inputController3);
+
                       Navigator.pop(context);
                     }
                   : null,
@@ -127,3 +154,6 @@ class _ToDoDialogState extends State<ToDoDialog> {
     );
   }
 }
+
+//controller: _inputController3,
+         // decoration: const InputDecoration(hintText: "Concert Venue"),
